@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form  onsubmit="onFileSelected(event)">
+        <input type="text" name="username" id="username">
+        <br>
+
+        <input type="file" id="img">
+        <img id="myimage" height="200">
+
+        <br>
+
+        <input type="submit">
+    </form>
+
+    <script>
+
+        // function loadData() {
+        //     //load Data từ localstorage
+        //     var showTag = document.getElementById("show");
+        //     let data = JSON.parse(localStorage.getItem('data'));
+        //     //Thêm các thẻ vào trong div
+        //     showTag.innerHTML = "";
+        //     for (let i = 0; i < data.length; i++) {
+        //         let e = document.createElement('img');
+        //         e.src = data[i].img;
+        //         showTag.appendChild(e);
+        //     }
+        // }
+        function onFileSelected(event) {
+            event.preventDefault()
+            console.log(event.target);
+            var name = document.getElementById("username").value;
+            var selectedFile = document.querySelector("#img").files[0];
+            console.log(img);
+            
+            console.log(name);
+            // var selectedFile = img.target.files[0];    
+
+            
+            var reader = new FileReader();
+
+            var imgtag = document.getElementById("myimage");
+            imgtag.title = selectedFile.name;
+            
+            reader.onload = function (event) {
+                console.log(event.target.result)
+                //Lấy data từ localstorage
+                let data = JSON.parse(localStorage.getItem('data'));
+                //kiểm tra xêm đã có hay chưa
+                if (!!!data) {
+                    data = [];
+                    data.push({
+                        img: event.target.result,
+                        name: name
+                    });
+                    localStorage.setItem('data', JSON.stringify(data));
+                    // loadData();
+
+                }else{
+                    data.push({
+                        img: event.target.result,
+                        name: name
+                    });
+                    localStorage.setItem('data', JSON.stringify(data));
+                }
+                imgtag.src = event.target.result;
+
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="show" >
+    </div>
+    <p></p>
+    <script>
+    function loadData() {
+            //load Data từ localstorage
+            var showTag = document.getElementById("show");
+            let data = JSON.parse(localStorage.getItem('data'));
+            //Thêm các thẻ vào trong div
+            showTag.innerHTML = "";
+            for (let i = 0; i < data.length; i++) {
+                let e = document.createElement('img');
+                let name = document.createElement('p');
+                name.innerHTML = data[i].name;
+                e.src = data[i].img;
+                showTag.appendChild(name);
+                showTag.appendChild(e);
+            }
+        }
+    loadData()
+    </script>
+</body>
+</html>
